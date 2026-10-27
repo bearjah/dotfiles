@@ -14,3 +14,7 @@ herdr/release-notes.json
 herdr/.plugins.lock
 nvim/plugin/
 nvim/.lazy/
+# Shell history and completion caches
+.zsh_history
+.zhistory
+.zcompdump*
