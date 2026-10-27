@@ -1,0 +1,16 @@
+# Local worktrees and editor files
+.codex/
+*.swp
+*.swo
+*~
+*.bak
+*.log
+*.sock
+.env
+.env.*
+# Runtime state and downloaded plugins
+herdr/session.json
+herdr/release-notes.json
+herdr/.plugins.lock
+nvim/plugin/
+nvim/.lazy/

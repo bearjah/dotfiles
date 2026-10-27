@@ -1,0 +1,54 @@
+onboarding = false
+# herdr configuration
+# Mirrors the user's tmux setup (gpakosz/oh-my-tmux) as closely as herdr allows.
+# See `herdr --default-config` for every available option and its default.
+
+[terminal]
+# tmux had: set-option -g default-shell /usr/bin/zsh
+default_shell = "/usr/bin/zsh"
+
+# tmux had: tmux_conf_new_pane_retain_current_path=true
+# New panes/tabs inherit the source pane's working directory.
+new_cwd = "follow"
+
+[keys]
+# Prefix key. tmux default was ctrl+b; changed to ctrl+q as requested.
+# (ctrl+letter chords are herdr's most reliable direct bindings.)
+prefix = "ctrl+q"
+
+# --- Tabs (= tmux "windows") -------------------------------------------------
+new_tab       = "prefix+c"      # tmux: prefix + c  (new-window)
+next_tab      = "alt+l"         # direct chord: navigate to next window (vim: l = right)
+previous_tab  = "alt+h"         # direct chord: navigate to prev window (vim: h = left)
+switch_tab    = "prefix+1..9"   # tmux: prefix + 1..9 (select-window)
+rename_tab    = "prefix+comma"  # tmux: prefix + ,  (rename-window)
+
+# --- Panes -------------------------------------------------------------------
+split_horizontal = "prefix+minus"  # tmux: prefix + -  (top/bottom split)
+split_vertical   = "prefix+v"      # tmux uses prefix + _ ; herdr's "v" is more
+                                   # reliable than shift+minus across terminals.
+focus_pane_left  = "prefix+h"      # tmux: prefix + h
+focus_pane_down  = "prefix+j"      # tmux: prefix + j
+focus_pane_up    = "prefix+k"      # tmux: prefix + k
+focus_pane_right = "prefix+l"      # tmux: prefix + l
+close_pane       = "prefix+x"      # tmux: prefix + x  (kill-pane)
+zoom             = "prefix+z"      # tmux: prefix + z  (resize-pane -Z)
+resize_mode      = "prefix+r"      # note: oh-my-tmux binds prefix+r to reload
+                                   # config; in herdr that is prefix+shift+r.
+copy_mode        = "prefix+enter"  # tmux/vim-style keyboard selection
+
+# --- Session -----------------------------------------------------------------
+detach = "prefix+d"   # tmux: prefix + d  (detach-client)
+
+[[keys.command]]
+key = "prefix+shift+y"
+type = "shell"
+command = "xclip -selection clipboard -out | sed -E 's/^[[:blank:]]*(>[[:blank:]]*)?//' | xclip -selection clipboard -in"
+description = "Remove leading spaces, tabs and quote markers from clipboard"
+
+[ui]
+# Match the active-pane blue accent from the tmux theme (#00afff).
+accent = "#00afff"
+
+# NOTE: your tmux used the hiroppy/tmux-agent-sidebar plugin. herdr has a
+# built-in agent sidebar (its whole reason for existing), so no plugin needed.
