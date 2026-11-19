@@ -1,6 +1,6 @@
 # Dotfiles
 
-My tmux, herdr, Neovim, and zsh configuration, captured from my Linux/WSL machine on 2026-10-27.
+My tmux, herdr, Neovim, and zsh configuration, captured from my Linux/WSL machine on 2026-10-27. The Neovim configuration was updated on 2026-11-19.
 
 ## Contents
 
@@ -9,15 +9,15 @@ My tmux, herdr, Neovim, and zsh configuration, captured from my Linux/WSL machin
 - `tmux/.tmux.conf`: locally modified Oh my tmux! configuration, including the `Ctrl+q` prefix, `Alt+h`/`Alt+l` window navigation, vi copy mode, and a shorter repeat timeout. `Ctrl+a` remains an alternate prefix.
 - `tmux/.tmux.conf.local`: zsh, true-color settings, `R` for rectangular selection in vi copy mode, and the `hiroppy/tmux-agent-sidebar` plugin.
 - `herdr/config.toml`: `Ctrl+q` prefix, vim-style pane navigation, `Alt+h`/`Alt+l` tab navigation, blue accent, and a clipboard cleanup command on prefix + `Shift+y`.
-- `nvim/`: customized Kickstart configuration with Space as leader, Telescope, Go LSP (`gopls`), Go formatting on save, Blink completion, Treesitter, and the Tokyo Night theme. Includes the plugin lockfile.
+- `nvim/`: customized Kickstart configuration using Neovim's built-in `vim.pack` plugin manager, with Space as leader, Telescope, Go LSP (`gopls`), Go formatting on save, mini.surround mappings under `gs` (so Visual-mode `s` replaces the selection immediately), Blink completion, Treesitter, and the Tokyo Night theme. Includes the plugin lockfile, `nvim-pack-lock.json`.
 
 This is a configuration snapshot. Binaries, downloaded plugins, logs, session state, credentials, shell history, and source repository histories are excluded.
 
 ## Requirements
 
-The source machine has tmux 3.6a, herdr 0.7.5, and Neovim 0.12.2. Other versions have not been verified.
+The source machine has tmux 3.6a, herdr 0.7.5, and Neovim 0.12.6. Other versions have not been verified; the Neovim configuration needs at least 0.12 for `vim.pack`.
 
-Both multiplexers expect zsh at `/usr/bin/zsh`. Adjust the shell setting if yours is elsewhere. Neovim uses Git, Make, a C compiler, unzip, and ripgrep; Go development also needs Go and `gofmt`. The herdr clipboard command needs `xclip` and access to an X11 clipboard. Neovim clipboard support needs a working clipboard provider.
+Both multiplexers expect zsh at `/usr/bin/zsh`. Adjust the shell setting if yours is elsewhere. Neovim uses Git, Make, a C compiler, unzip, ripgrep, fd, and the tree-sitter CLI, which Treesitter uses to build parsers; Go development also needs Go and `gofmt`. The herdr clipboard command needs `xclip` and access to an X11 clipboard. Neovim clipboard support needs a working clipboard provider.
 
 ## Zsh dependencies
 
@@ -51,9 +51,9 @@ Start a new tmux session to load the configuration; Oh my tmux! can install TPM 
 
 Start a new zsh shell to load `.zshrc`.
 
-Start herdr to load its configuration. Open Neovim to bootstrap lazy.nvim, then run `:Lazy restore` to restore the plugin revisions in `lazy-lock.json`. Mason and Treesitter can download language tools and parsers. Run `:checkhealth` to inspect missing dependencies. See [the upstream Kickstart guide](nvim/README.upstream.md) for configuration details.
+Start herdr to load its configuration. Open Neovim and confirm the plugin install prompt; `vim.pack` installs every plugin at the revision pinned in `nvim-pack-lock.json`. Run `:lua vim.pack.update()` to fetch newer plugin revisions (`:write` applies them, `:quit` cancels). Mason and Treesitter can download language tools and parsers. Run `:checkhealth` to inspect missing dependencies. See [the upstream Kickstart guide](nvim/README.upstream.md) for configuration details.
 
 ## Upstream sources and licenses
 
 - tmux is based on [gpakosz/.tmux](https://github.com/gpakosz/.tmux), local base commit `af33f07134b76134acca9d01eacbdecca9c9cda6`, with the modifications described above. Its MIT and WTFPL v2 licenses are preserved in `tmux/`.
-- Neovim is based on [nvim-lua/kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim), local base commit `4b065ad`, with local configuration changes. Its MIT license is preserved in `nvim/LICENSE.md`.
+- Neovim is based on [nvim-lua/kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim), local base commit `8e35dbe`, with local configuration changes. Its MIT license is preserved in `nvim/LICENSE.md`.
